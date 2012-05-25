@@ -64,6 +64,11 @@ PS.Attraction.prototype = {
 
       });
 
+
+
+      // var distFromSystemCenter = p1.position.clone().distanceTo(system.center);
+
+
       p1.acceleration = p1.netForce.clone().divideScalar(p1.mass);
 
       // if (!idx) console.log(p1.position.x);

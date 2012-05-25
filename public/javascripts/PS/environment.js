@@ -17,23 +17,22 @@ PS.Environment = function(width, height, depth, timespan){
     var forces = this.forces;
     this.systems.map(function(sys){
 
+      sys.preStep();
 
       forces.forEach(function(force){
         force.apply(sys);
       });
+
+      sys.postStep();
 
     });
   };
 
   // Returns all 3D mesh objects in the environment
   klass.objects = function(){
-    var objects = [];
-    this.systems.forEach(function(sys){
-      sys.particles.forEach(function(p){
-        objects = objects.concat(p.meshes);
-      });
-    });
-    return objects;
+    return this.systems.reduce(function(meshes, sys){
+      return meshes.concat(sys.meshes());
+    }, []);
   };
 
 })(PS.Environment.prototype);

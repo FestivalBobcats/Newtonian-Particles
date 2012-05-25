@@ -1,7 +1,9 @@
 var PS = PS || {};
 
-PS.rand = function(n){
-  return Math.random() * n;
+// TODO: rename to randomRange and reverse param order
+PS.rand = function(max, min){
+  min = min || max / 4;
+  return min + Math.random() * max;
 };
 
 PS.pickRandom = function(array){
@@ -24,17 +26,20 @@ PS.require = function(filename){
   // load order matters
   var filenames = [
     "vendor/THREE",
+    "vendor/shader_extras",
     "vendor/stats",
     "PS/particle",
     "PS/particles/planet",
     "PS/particles/star",
-    "PS/particle-system",
+    "PS/particles/blackhole",
+    "PS/particle_system",
     "PS/force",
     "PS/forces/attraction",
     "PS/forces/rotation",
     "PS/environment",
     "PS/camera",
-    "PS/stage"
+    "PS/stage",
+    "PS/post_processing/depth_of_field"
   ];
 
   filenames.forEach(PS.require);

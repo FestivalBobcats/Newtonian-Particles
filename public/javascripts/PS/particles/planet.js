@@ -1,5 +1,4 @@
 var texturePaths = [
-  'planets/gas.gif',
   'planets/starblue.gif',
   'planets/stargreen.gif',
   'planets/staryellow.gif'
@@ -12,13 +11,15 @@ var textures = texturePaths.map(function(path){
 PS.Planet = function(mass, radius){
   var p = new PS.Particle(mass, radius);
 
-  var sphereMaterial = new THREE.MeshLambertMaterial({
-    color: 0x777777,
-    reflectivity: 0.1,
-    refractionRatio: 10,
+  var sphereMaterial = new THREE.MeshPhongMaterial({
+    specular: 0xaaccff,
+    reflectivity: 0.001,
+    perPixel: true,
     map: PS.pickRandom(textures)
-    // lightMap: THREE.ImageUtils.loadTexture('textures/planets/desert_lightmap.gif')
   });
+
+
+
   var segments = radius * 4,
       rings = radius * 4,
       geometry = new THREE.SphereGeometry(radius, segments, rings);
