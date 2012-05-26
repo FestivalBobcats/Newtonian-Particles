@@ -5,8 +5,6 @@ PS.Stage = function(el, env){
   this.height = this.env.height;
   this.depth = this.env.depth;
 
-  this.center = new THREE.Vector3;
-
   this.currentFrame = 0;
   this.frameRate = 24;
   this.totalFrames = env.timespan * this.frameRate;
@@ -23,7 +21,7 @@ PS.Stage = function(el, env){
 
   var scene = this.scene = new THREE.Scene();
 
-  this.camera = new PS.Camera(this);
+  this.camera = PS.spawnCamera(this);
 
   this.renderer.setSize(env.width, env.height);
 
@@ -42,15 +40,15 @@ PS.Stage = function(el, env){
 
 
 
-  this.clock = new THREE.Clock();
+  // this.clock = new THREE.Clock();
 
 
-  var controls = this.controls = new THREE.FlyControls(this.camera);
-  controls.movementSpeed = 1;
-  controls.domElement = this.container;
-  controls.rollSpeed = 0;
-  // controls.autoForward = false;
-  controls.dragToLook = true;
+  // var controls = this.controls = new THREE.FlyControls(this.camera);
+  // controls.movementSpeed = 1;
+  // controls.domElement = this.container;
+  // controls.rollSpeed = 0;
+  // // controls.autoForward = false;
+  // controls.dragToLook = true;
 
 
 
@@ -87,6 +85,9 @@ PS.Stage = function(el, env){
 
   // this.postprocessing = new PS.DepthOfField();
 
+  this.target = function(system){
+    self.focus = system;
+  };
 
 
 
@@ -94,15 +95,10 @@ PS.Stage = function(el, env){
     ++self.currentFrame;
     self.env.step();
 
-    // self.camera.position.x = self.center.x + Math.sin(self.currentFrame / 500) * self.depth / 2;
-    // self.camera.position.z = self.center.z + Math.cos(self.currentFrame / 500) * self.depth / 2;
-
-    // self.camera.lookAt(self.center);
+    self.camera.lookAt(self.focus.center);
 
     // var delta = self.clock.getDelta();
     // self.controls.update(delta);
-
-
 
     // renderer.clear();
 

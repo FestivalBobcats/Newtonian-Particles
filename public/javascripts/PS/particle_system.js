@@ -42,7 +42,7 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
 
   // fired once every render loop AFTER forces are applied
   this.postStep = function(){
-    // this.updateCenter();
+    this.updateCenter();
   };
 
   // adjust the position of the system center point in regards to the collective radius of its particles
@@ -56,8 +56,8 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
 
     var centerMass = pos.divideScalar(M);
 
-    this.center.set(centerMass);
-    this.core.position = this.center;
+    this.center = centerMass;
+    // this.core.position = this.center;
   };
 
 

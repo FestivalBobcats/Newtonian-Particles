@@ -25,6 +25,9 @@ var App = function(){
   env.attachForce(new PS.Rotation);
 
   var stage = new PS.Stage('body', env);
+
+  stage.target(system);
+
   stage.play();
 }
 
