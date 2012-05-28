@@ -1,3 +1,0 @@
-PS.Force = function(){
-
-};
