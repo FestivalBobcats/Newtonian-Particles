@@ -13,9 +13,9 @@ PS.Planet = function(mass, radius){
 
   var sphereMaterial = new THREE.MeshLambertMaterial({
     specular: 0xaaccff,
-    reflectivity: 0.001,
-    perPixel: true,
-    map: PS.pickRandom(textures)
+    emissive: 0x224488,
+    map: PS.pickRandom(textures),
+    refractionRatio: 0.97
   });
 
 

@@ -36,11 +36,11 @@ PS.Stage = function(el, env){
 
 
 
-  this.scene.add(new THREE.AmbientLight({ color: 0x666699 }));
+  // this.scene.add(new THREE.AmbientLight({ color: 0x666699 }));
 
 
 
-  this.scene.fog = new THREE.FogExp2( 0x002266, 0.002 );
+  // this.scene.fog = new THREE.FogExp2( 0x002266, 0.002 );
 
 
 

@@ -28,11 +28,13 @@ PS.require = function(filename){
   // syncronously fetch scripts to prevent load errors
   $.ajaxSetup({async:false});
 
+  PS.require( "vendor/Detector" );
+  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
   // load order matters
   var filenames = [
     // "vendor/THREE",
-    "vendor/shader_extras",
+    "vendor/ShaderExtras",
     "vendor/postprocessing/RenderPass",
     "vendor/postprocessing/BloomPass",
     "vendor/postprocessing/ShaderPass",
@@ -50,8 +52,7 @@ PS.require = function(filename){
     "PS/environment",
     "PS/camera",
     "PS/renderer",
-    "PS/stage",
-    "PS/post_processing/depth_of_field"
+    "PS/stage"
   ];
 
   filenames.forEach(PS.require);

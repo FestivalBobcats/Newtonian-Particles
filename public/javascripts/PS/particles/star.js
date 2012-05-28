@@ -4,7 +4,7 @@ PS.Star = function(mass, radius){
   var light = new THREE.PointLight(0xAACCFF, 3, 300);
   p.meshes.push(light);
 
-  var sphereMaterial = new THREE.MeshPhongMaterial({ emissive: 0xFFFFFF, ambient: 0xFFFFFF, color: 0xFFFFFF, specular: 0xFFFFFF, shininess: 50 }),
+  var sphereMaterial = new THREE.MeshPhongMaterial({ refractionRatio: 0.97, blending: THREE.AdditiveBlending, emissive: 0x66AAFF }),// 0xaaccff }),
       segments = 20,
       rings = segments,
       geometry = new THREE.SphereGeometry(radius, segments, rings);

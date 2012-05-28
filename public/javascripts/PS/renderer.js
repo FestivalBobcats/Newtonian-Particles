@@ -120,7 +120,7 @@ PS.Renderer = function(stage){
   var composer = new THREE.EffectComposer( renderer, dof.rtTextureColor );
 
   var renderModel = new THREE.RenderPass( scene, camera, null );
-  // renderModel.clearAlpha = 0;
+  renderModel.clearAlpha = 0;
 
 
   var effectBlend = new THREE.ShaderPass( THREE.ShaderExtras[ "blend" ], "tDiffuse1" );
@@ -130,7 +130,7 @@ PS.Renderer = function(stage){
   // effectSave.clear = true;
 
   effectBlend.uniforms[ 'tDiffuse2' ].texture = effectSave.renderTarget;
-  effectBlend.uniforms[ 'mixRatio' ].value = 0.5;
+  effectBlend.uniforms[ 'mixRatio' ].value = 0.7;
   effectBlend.uniforms[ 'opacity' ].value = 1.0;
 
 
@@ -139,8 +139,8 @@ PS.Renderer = function(stage){
 
   var effectController  = {
 
-    focus:    0.9,
-    aperture: 0.05,
+    focus:    0.5,
+    aperture: 0.12,
     maxblur:  1.0
 
   };
@@ -167,14 +167,24 @@ PS.Renderer = function(stage){
   var bloom = new THREE.BloomPass( 0.5 );
 
 
+  // var renderMask = new THREE.MaskPass( scene, camera );
 
 
   composer.addPass( renderModel );
+  composer.addPass( bloom );
   composer.addPass( effectBlend );
   composer.addPass( effectSave );
-  composer.addPass( bloom );
+  // composer.addPass( renderMask );
 
-
+// composer2.addPass( renderScene );
+// composer2.addPass( effectDotScreen );
+// composer2.addPass( renderMask );
+// composer2.addPass( effectColorify1 );
+// composer2.addPass( clearMask );
+// composer2.addPass( renderMaskInverse );
+// composer2.addPass( effectColorify2 );
+// composer2.addPass( clearMask );
+// composer2.addPass( effectVignette );
 
 
 

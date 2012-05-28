@@ -9,7 +9,7 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount){
   var attraction = new PS.Attraction;
 
 
-  var planetMass = 20000,
+  var planetMass = 50000,
       starMass =   10000000;
   var planetRadius = 4,
       starRadius = 15;
@@ -103,7 +103,7 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount){
 PS.ParticleSystem.prototype.addParticle = function(p){
   p.position.x = this.core.position.x + (PS.rand(this.width * 2) - this.width);
   p.position.y = this.core.position.y + (PS.rand(this.height) - this.height / 2);
-  p.position.z = this.depth;
+  p.position.z = this.core.position.z + (PS.rand(this.depth) - this.depth / 2);
   this.particles.push(p);
 };
 

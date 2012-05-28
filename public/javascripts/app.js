@@ -10,7 +10,7 @@ var App = function(){
   var w = window.innerWidth,
       h = window.innerHeight,
       d = h,
-      particleCount = 100;
+      particleCount = 200;
 
   
 

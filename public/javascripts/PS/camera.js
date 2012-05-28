@@ -1,5 +1,5 @@
 PS.Camera = function(stage){
-  var fov = 50,
+  var fov = 30,
       aspect = stage.width / stage.height,
       near = 50,
       far = stage.depth;
@@ -13,7 +13,7 @@ PS.Camera = function(stage){
 
   c.preRenderHook = function(){
     c.lookAt(stage.focus.core.position);
-    c.position.setZ(stage.focus.core.position.z + z);
+    // c.position.z = stage.focus.core.position.z + z;
   };
 
   return c;
