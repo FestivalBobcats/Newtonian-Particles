@@ -133,15 +133,20 @@ PS.Renderer = function(stage){
   effectBlend.uniforms[ 'mixRatio' ].value = 0.7;
   effectBlend.uniforms[ 'opacity' ].value = 1.0;
 
-
+  var bloom = new THREE.BloomPass( 0.5 );
 
 
 
   var effectController  = {
 
-    focus:    0.5,
-    aperture: 0.12,
-    maxblur:  1.0
+    focus:    1.0,
+    aperture: 0.05,
+    maxblur:  1.0,
+
+    mixRatio: 0.15,
+    opacity: 1.0,
+
+    bloom: 1.0
 
   };
 
@@ -151,20 +156,27 @@ PS.Renderer = function(stage){
     dof.bokeh_uniforms[ "aperture" ].value = effectController.aperture;
     dof.bokeh_uniforms[ "maxblur" ].value = effectController.maxblur;
 
+    effectBlend.uniforms[ "mixRatio" ].value = effectController.mixRatio;
+    effectBlend.uniforms[ "opacity" ].value = effectController.opacity;
+
+    bloom.screenUniforms[ "opacity" ].value = effectController.bloom;
+
   };
 
   var gui = new DAT.GUI();
   gui.add( effectController, "focus", 0.0, 3.0, 0.025 ).onChange( matChanger );
   gui.add( effectController, "aperture", 0.001, 0.2, 0.001 ).onChange( matChanger );
   gui.add( effectController, "maxblur", 0.0, 3.0, 0.025 ).onChange( matChanger );
+
+  gui.add( effectController, "mixRatio", 0.0, 0.999, 0.01 ).onChange( matChanger );
+  gui.add( effectController, "opacity", 0.0, 1.0, 0.01 ).onChange( matChanger );
+
+  gui.add( effectController, "bloom", 0.0, 1.0, 0.01 ).onChange( matChanger );
+
   gui.close();
 
 
   matChanger();
-
-
-
-  var bloom = new THREE.BloomPass( 0.5 );
 
 
   // var renderMask = new THREE.MaskPass( scene, camera );

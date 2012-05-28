@@ -7,7 +7,7 @@ PS.Attraction.prototype = {
 
   // type: 'n-ary',
 
-  G: 6.67e-5,
+  G: 6.67e-2,
 
   // This should only affect the netForce applied to p1
   collide: function(p1, p2){

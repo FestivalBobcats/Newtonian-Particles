@@ -47,7 +47,6 @@ PS.require = function(filename){
     "PS/particles/planet",
     "PS/particles/star",
     "PS/particle_system",
-    "PS/force",
     "PS/forces/attraction",
     "PS/environment",
     "PS/camera",

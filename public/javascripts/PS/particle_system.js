@@ -9,10 +9,10 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount){
   var attraction = new PS.Attraction;
 
 
-  var planetMass = 50000,
-      starMass =   10000000;
-  var planetRadius = 4,
-      starRadius = 15;
+  var planetMass = 1,
+      starMass = planetMass * 5000;
+  var planetRadius = 3,
+      starRadius = 10;
 
 
   // point of gravitation of the system to control the radius
@@ -53,6 +53,8 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount){
       p1.netForce.set(0,0,0);
 
       p1.rotate();
+
+      if (p1.preRenderHook) p1.preRenderHook();
 
     });
   };

@@ -5,9 +5,7 @@ PS.Stage = function(el, env){
   this.height = this.env.height;
   this.depth = this.env.depth;
 
-  this.currentFrame = 0;
-  this.frameRate = 24;
-  this.totalFrames = env.timespan * this.frameRate;
+
 
 
   var self = this;
@@ -73,7 +71,7 @@ PS.Stage = function(el, env){
 
 
   this.render = function(){
-    ++self.currentFrame;
+    
     self.env.step();
 
     self.camera.preRenderHook();
