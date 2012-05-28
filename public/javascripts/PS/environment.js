@@ -1,28 +1,18 @@
-PS.Environment = function(width, height, depth, timespan){
+PS.Environment = function(width, height, depth){
   this.width = width;
   this.height = height;
   this.depth = depth;
-  this.timespan = timespan;
   this.systems = [];
-  this.forces = [];
 };
 
 (function(klass){
-
-  klass.attachForce = function(force){
-    this.forces.push(force);
-  };
 
   klass.step = function(){
     var forces = this.forces;
     this.systems.map(function(sys){
 
       sys.preStep();
-
-      forces.forEach(function(force){
-        force.apply(sys);
-      });
-
+      sys.step();
       sys.postStep();
 
     });

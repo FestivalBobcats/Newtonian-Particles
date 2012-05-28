@@ -12,9 +12,14 @@ PS.pickRandom = function(array){
 
 PS.require = function(filename){
   var filepath = "/javascripts/" + filename + ".js";
-  $.getScript(filepath, function(){
+  $.getScript(filepath)
+  .done(function(){
     console.log("Loaded " + filename + ".");
-  });
+  })
+  .fail(function(jqxhr, settings, exception){
+    console.error("Failed to load " + filename + ".");
+    console.error(exception.message);
+  })
 };
 
 
@@ -23,21 +28,28 @@ PS.require = function(filename){
   // syncronously fetch scripts to prevent load errors
   $.ajaxSetup({async:false});
 
+
   // load order matters
   var filenames = [
-    "vendor/THREE",
+    // "vendor/THREE",
     "vendor/shader_extras",
+    "vendor/postprocessing/RenderPass",
+    "vendor/postprocessing/BloomPass",
+    "vendor/postprocessing/ShaderPass",
+    "vendor/postprocessing/MaskPass",
+    "vendor/postprocessing/SavePass",
+    "vendor/postprocessing/EffectComposer",
     "vendor/stats",
+    "vendor/DAT.GUI.min",
     "PS/particle",
     "PS/particles/planet",
     "PS/particles/star",
-    "PS/particles/blackhole",
     "PS/particle_system",
     "PS/force",
     "PS/forces/attraction",
-    "PS/forces/rotation",
     "PS/environment",
     "PS/camera",
+    "PS/renderer",
     "PS/stage",
     "PS/post_processing/depth_of_field"
   ];

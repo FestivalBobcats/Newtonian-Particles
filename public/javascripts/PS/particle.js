@@ -11,7 +11,12 @@ PS.Particle = function(mass, radius){
   this.meshes = [];
 };
 
+PS.Particle.prototype.angularAcceleration = function(){
+  return this.acceleration.clone().divideScalar(this.radius);
+}
+
 PS.Particle.prototype.rotate = function(angularAccel){
+  var angularAccel = this.angularAcceleration();
   this.angularVelocity.addSelf(angularAccel);
   var rot = this.rotation.addSelf(this.angularVelocity);
   this.meshes.forEach(function(mesh){

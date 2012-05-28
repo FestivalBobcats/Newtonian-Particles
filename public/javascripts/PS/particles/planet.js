@@ -11,7 +11,7 @@ var textures = texturePaths.map(function(path){
 PS.Planet = function(mass, radius){
   var p = new PS.Particle(mass, radius);
 
-  var sphereMaterial = new THREE.MeshPhongMaterial({
+  var sphereMaterial = new THREE.MeshLambertMaterial({
     specular: 0xaaccff,
     reflectivity: 0.001,
     perPixel: true,

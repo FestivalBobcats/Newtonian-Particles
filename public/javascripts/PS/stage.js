@@ -9,28 +9,14 @@ PS.Stage = function(el, env){
   this.frameRate = 24;
   this.totalFrames = env.timespan * this.frameRate;
 
-  var renderer = this.renderer = new THREE.WebGLRenderer({
-    clearColor: 0x000000,
-    // clearAlpha: 1,
-    // preserveDrawingBuffer: true,
-    antialias: true
-  });
-  renderer.autoClearColor = false;
 
   var self = this;
 
   var scene = this.scene = new THREE.Scene();
 
-  this.camera = PS.spawnCamera(this);
+  this.camera = new PS.Camera(this);
 
-  this.renderer.setSize(env.width, env.height);
-
-  renderer.sortObjects = true;
-  renderer.gammaInput = true;
-  renderer.gammaOutput = true;
-  renderer.physicallyBasedShading = true;
-
-  this.container.append(this.renderer.domElement);
+  this.renderer = new PS.Renderer(this);
 
 
 
@@ -40,15 +26,8 @@ PS.Stage = function(el, env){
 
 
 
-  // this.clock = new THREE.Clock();
 
 
-  // var controls = this.controls = new THREE.FlyControls(this.camera);
-  // controls.movementSpeed = 1;
-  // controls.domElement = this.container;
-  // controls.rollSpeed = 0;
-  // // controls.autoForward = false;
-  // controls.dragToLook = true;
 
 
 
@@ -61,7 +40,7 @@ PS.Stage = function(el, env){
 
 
 
-  this.scene.fog = new THREE.FogExp2( 0x000000, 0.001 );
+  this.scene.fog = new THREE.FogExp2( 0x002266, 0.002 );
 
 
 
@@ -83,6 +62,8 @@ PS.Stage = function(el, env){
 
 
 
+
+
   // this.postprocessing = new PS.DepthOfField();
 
   this.target = function(system){
@@ -95,22 +76,9 @@ PS.Stage = function(el, env){
     ++self.currentFrame;
     self.env.step();
 
-    self.camera.lookAt(self.focus.center);
+    self.camera.preRenderHook();
 
-    // var delta = self.clock.getDelta();
-    // self.controls.update(delta);
-
-    // renderer.clear();
-
-    // // Render scene into texture
-    // scene.overrideMaterial = null;
-    // renderer.render( scene, camera, postprocessing.rtTextureColor, true );
-
-    // // Render depth into texture
-    // scene.overrideMaterial = material_depth;
-    // renderer.render( scene, camera, postprocessing.rtTextureDepth, true );
-
-    self.renderer.render(self.scene, self.camera);
+    self.renderer.postRenderHook();
   };
 
   this.play = function(){
@@ -120,5 +88,15 @@ PS.Stage = function(el, env){
   };
 
 };
+
+
+
+
+
+
+
+
+
+
 
 

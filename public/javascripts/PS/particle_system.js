@@ -1,31 +1,22 @@
-PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
+PS.ParticleSystem = function(env, center, dimensions, particleCount){
   this.center = center;
   this.width = dimensions.x;
   this.height = dimensions.y;
   this.depth = dimensions.z;
   this.particleCount = particleCount;
-  this.starCount = starCount;
   this.particles = [];
 
-  // var centerMesh = new THREE.
-  // this.meshes = function(){
-  //   var meshes = [centerMesh];
-  //   sys.particles.forEach(function(p){
-  //     meshes = meshes.concat(p.meshes);
-  //   });
-  //   return meshes;
-  // };
+  var attraction = new PS.Attraction;
 
-  var planetMass = 100000,
-      starMass = 10000000,
-      blackholeMass = 100000000;
-  var planetRadius = 6,
-      starRadius = 20,
-      blackholeRadius = 30;
+
+  var planetMass = 20000,
+      starMass =   10000000;
+  var planetRadius = 4,
+      starRadius = 15;
 
 
   // point of gravitation of the system to control the radius
-  this.core = new PS.Blackhole(blackholeMass, blackholeRadius);
+  this.core = new PS.Star(starMass, starRadius);
   this.core.position = this.center;
   this.particles.push(this.core);
 
@@ -37,7 +28,33 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
 
   // fired once every render loop BEFORE forces are applied
   this.preStep = function(){
+    // this.detectCollisions();
+  };
 
+  this.step = function(){
+    var particles = this.particles;
+    particles.forEach(function(p1){
+
+
+
+      particles.forEach(function(p2){
+        if (p1 != p2) {
+
+          attraction.apply(p1, p2);
+
+        }
+      });
+
+      p1.acceleration = p1.netForce.clone().divideScalar(p1.mass);
+
+      p1.displace();
+
+      // clear netForce
+      p1.netForce.set(0,0,0);
+
+      p1.rotate();
+
+    });
   };
 
   // fired once every render loop AFTER forces are applied
@@ -57,52 +74,26 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
     var centerMass = pos.divideScalar(M);
 
     this.center = centerMass;
-    // this.core.position = this.center;
+  };
+
+
+
+
+  this.attachForce = function(force){
+    forces.push(force);
   };
 
 
 
   this.populate = function(){
-    var objCount = this.particleCount - this.starCount;
+    var objCount = this.particleCount;
     while (this.particles.length < objCount) {
-      var r = PS.rand(planetRadius),
+      var r = PS.rand(planetRadius, 1),
           m = PS.rand(r * planetMass);
       var p = new PS.Planet(m, r);
       this.addParticle(p);
     }
-
-    while (this.particles.length < this.particleCount) {
-      var r = starRadius,
-          m = PS.rand(r * starRadius);
-      var p = new PS.Star(m, r);
-      this.addParticle(p);
-    }
   };
-
-
-          //   for ( var i = 0; i < 2000; i ++ ) {
-
-          //   var vertex = new THREE.Vector3();
-          //   vertex.x = Math.random() * 4000 - 2000;
-          //   vertex.y = Math.random() * 4000 - 2000;
-          //   vertex.z = Math.random() * 4000 - 2000;
-          //   geometry.vertices.push( vertex );
-
-          //   geometry.colors.push(new THREE.Color(0x8000ff));
-
-          // }
-
-          // var geometry = new THREE.Geometry;
-          // var material = new THREE.ParticleBasicMaterial({
-          //   size: 1,
-          //   vertexColors: THREE.VertexColors,
-          //   depthTest: false,
-          //   opacity: 0.5,
-          //   sizeAttenuation: false
-          // });
-          // var mesh = new THREE.ParticleSystem(geometry, material);
-
-        
 
   env.systems.push(this);
 
@@ -110,12 +101,10 @@ PS.ParticleSystem = function(env, center, dimensions, particleCount, starCount){
 };
 
 PS.ParticleSystem.prototype.addParticle = function(p){
-  p.position.x = PS.rand(this.center.x + this.width);
-  p.position.y = 0;
-  p.position.z = PS.rand(this.center.z + this.depth / 2);
+  p.position.x = this.core.position.x + (PS.rand(this.width * 2) - this.width);
+  p.position.y = this.core.position.y + (PS.rand(this.height) - this.height / 2);
+  p.position.z = this.depth;
   this.particles.push(p);
 };
-
-PS.ParticleSystem.prototype
 
 
