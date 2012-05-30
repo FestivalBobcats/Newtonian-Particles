@@ -1,1 +1,1 @@
-Run `shotgun app.rb` to launch
+Run `script/server`, go to http://localhost:8000
